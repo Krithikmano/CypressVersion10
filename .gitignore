@@ -1,0 +1,7 @@
+node_modules
+allure*
+package-lock.json
+cypress/video
+allure*
+cypress/downloads
+cypress/screen*
