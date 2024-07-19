@@ -3,13 +3,14 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "test": "npx cypress run --env tags=@amazon",
-    "report": ".\\node_modules\\.bin\\allure generate allure-results --clean -o allure-report && allure open allure-report"
+    "test": "npx cypress open --env tags=@amazon",
+    "report": "./node_modules/.bin/allure generate allure-results --clean -o allure-report && allure open allure-report"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@badeball/cypress-cucumber-preprocessor": "^13.0.2",
+    "@badeball/cypress-cucumber-preprocessor": "^20.1.0",
+    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.1",
     "@shelex/cypress-allure-plugin": "^2.33.0",
     "allure-commandline": "^2.18.1",
     "cucumber": "^6.0.7",

@@ -1,32 +1,35 @@
 import { defineConfig } from "cypress";
+import createBundler from "@bahmutov/cypress-esbuild-preprocessor";
 import { addCucumberPreprocessorPlugin } from "@badeball/cypress-cucumber-preprocessor";
-import browserify from "@badeball/cypress-cucumber-preprocessor/browserify";
-const allureWriter =require("@shelex/cypress-allure-plugin/writer");
-
-//const options = browserify.defaultOptions;
+import { createEsbuildPlugin } from "@badeball/cypress-cucumber-preprocessor/esbuild";
 
 export default defineConfig({
- env:{
- allure:true,
- allureAddVideoOnPass:true,
- allureClearSkippedTests:false,
- filterSpecs:true,
- omitFiltered:true
-  },
-  video:false,
+  env:{
+    allure:true,
+    allureAddVideoOnPass:true,
+    allureClearSkippedTests:false,
+    filterSpecs:true,
+    omitFiltered:true
+     },
+     video:false,
   e2e: {
-    async setupNodeEvents(  on: Cypress.PluginEvents,
-      config: Cypress.PluginConfigOptions) {
+    specPattern: "**/*.feature",
+    async setupNodeEvents(
+      on: Cypress.PluginEvents,
+      config: Cypress.PluginConfigOptions
+    ): Promise<Cypress.PluginConfigOptions> {
+      // This is required for the preprocessor to be able to generate JSON reports after each run, and more,
       await addCucumberPreprocessorPlugin(on, config);
+
       on(
         "file:preprocessor",
-        browserify(config, {
-          typescript: require.resolve("typescript"),
+        createBundler({
+          plugins: [createEsbuildPlugin(config)],
         })
-      )
-      allureWriter(on, config); 
+      );
+
+      // Make sure to return the config object as it might have been modified by the plugin.
       return config;
     },
-    specPattern:['cypress/e2e/**/*.feature']
   },
 });

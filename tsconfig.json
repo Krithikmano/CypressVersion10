@@ -1,8 +1,13 @@
 {
     "compilerOptions": {
+      "esModuleInterop": true,
+      "paths": {
+        "@badeball/cypress-cucumber-preprocessor/*": ["./node_modules/@badeball/cypress-cucumber-preprocessor/dist/subpath-entrypoints/*"]
+      },
       "target": "es5",
       "lib": ["es5", "dom"],
       "types": ["cypress", "node"]
     },
-    "include": ["**/*.ts","./node_modules/@shelex/cypress-allure-plugin/reporter","./node_modules/cypress"]
+    //"include": ["**/*.ts","./node_modules/@shelex/cypress-allure-plugin/reporter","./node_modules/cypress"]
+    "include": ["**/*.ts"]
   }
